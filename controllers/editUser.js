@@ -4,9 +4,7 @@ export const editUser = async (req, res, next) => {
     const { token, newUsername, newPassword } = req.body;
 
     try {
-        const result = await db.query`
-            EXEC EditUser ${token}, ${newUsername}, ${newPassword}`;
-        
+        const result = await db.query(`EXEC EditUser ${token}, ${newUsername}, ${newPassword}`);        
         if (result.returnValue === -1) {
             return res.status(401).json({ error: "Invalid or expired token" });
         }
