@@ -2,11 +2,15 @@ import db from "../sequelize.js";
 
 export const login = async (req, res, next) => {
     try{
-        const { Username, Password, UserToken } = req.body;
+        const { Username, Password } = req.body;
         if(!Username || !Password){
           return res.status(400).json({message: "email and password is needed"});
         }
-        const result = await db.query(`EXEC LoginUser '${Username}', '${Password}'`);
+        const result = await db.query(`EXEC LoginUser '${Username}', '${Password}'`,
+        {
+            replacements: { Username, Password }, 
+            type: db.QueryTypes.SELECT
+        });
             if (result.returnValue === -1) {
                 return res.status(401).json({ error: "Invalid or expired token" });
             }
