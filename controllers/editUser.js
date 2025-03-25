@@ -1,10 +1,16 @@
 import db from "../sequelize.js";
 
 export const editUser = async (req, res, next) => {
-    const { token, newUsername, newPassword } = req.body;
+    const { Token, NewUsername, NewPassword } = req.body;
 
     try {
-        const result = await db.query(`EXEC EditUser ${token}, ${newUsername}, ${newPassword}`);        
+        console.log(Token, NewUsername, NewPassword);
+        const result = await db.query(`EXEC EditUser @Token = :Token, @NewUsername = :NewUsername, @NewPassword = :NewPassword`,
+            {
+                replacements: {Token, NewUsername, NewPassword }, 
+                type: db.QueryTypes.SELECT
+            }
+        );
         if (result.returnValue === -1) {
             return res.status(401).json({ error: "Invalid or expired token" });
         }
