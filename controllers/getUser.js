@@ -13,7 +13,6 @@ export const getUser = async (req, res, next) => {
               type: db.QueryTypes.SELECT
             }
           );
-          console.log(result);
           if (result.length > 0) {
             const username = result[0].username;
             return res.status(200).json({message: `Welcome ${username}`});
