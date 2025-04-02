@@ -4,7 +4,6 @@ export const editUser = async (req, res, next) => {
     const { Token, NewUsername, NewPassword } = req.body;
 
     try {
-        console.log(Token, NewUsername, NewPassword);
         const result = await db.query(`EXEC EditUser @Token = :Token, @NewUsername = :NewUsername, @NewPassword = :NewPassword`,
             {
                 replacements: {Token, NewUsername, NewPassword }, 

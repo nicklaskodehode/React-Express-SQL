@@ -3,10 +3,11 @@ import db from "../sequelize.js";
 export const createNewUser = async (req, res, next) => {
     try {
         const {username, password} = req.body;
+        console.log(username,password)
         if(!username || !password){
             return res.status(400).json({message: "All input fields must be filled out"});
         }
-
+        console.log(username,password)
         const result = await db.query("EXEC RegisterUser @username = :username, @password = :password",
             {
                 replacements: { username, password }, 

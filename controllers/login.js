@@ -10,18 +10,19 @@ export const login = async (req, res, next) => {
             `
             declare @ReturnValue int; 
             declare @Token nvarchar(4000); 
-            EXEC @ReturnValue = LoginUser @username = :username, @password = :password, @UserToken = @Token OUTPUT; 
+            EXEC @ReturnValue = LoginUser @username = :username, @password = :password, @userToken = @Token OUTPUT; 
             Select @ReturnValue as ReturnValue, @Token as UserToken;
             `,
         {
             replacements: { username, password }, 
             type: db.QueryTypes.SELECT
         });
-            if (result.returnValue === -1) {
-                return res.tatus(401).json({ error: "Invalid or expired token" });
+            if (result[0].ReturnValue === -1) {
+                return res.status(401).json({ error: "Invalid or expired token" });
             }
-        return res.status(200).json({message: `Login was correct, welcome ${username}`});
-
+            else{
+                return res.status(200).json({message: `Login was correct, welcome ${username}`});
+            }
     } catch(err){
         console.error("Error during login:", err); 
         return res.status(500).json({ message: "An Error occured" });
