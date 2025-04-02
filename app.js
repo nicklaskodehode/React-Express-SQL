@@ -16,6 +16,7 @@ import usersRouter from './routes/users.js'
 import { createNewUser } from './controllers/createNewUser.js';
 import { editUser } from './controllers/editUser.js';
 import { login } from './controllers/login.js';
+import { getUser } from './controllers/getUser.js';
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use('/users', usersRouter);
 app.use('/user/create', createNewUser);
 app.use('/user/login', login);
 app.use('/user/edit', editUser);
+app.use('/user/getuser',getUser);
 
 
 // catch 404 and forward to error handler
