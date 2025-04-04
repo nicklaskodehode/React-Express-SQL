@@ -21,7 +21,7 @@ export const login = async (req, res, next) => {
                 return res.status(401).json({ error: "Invalid or expired token" });
             }
             else{
-                return res.status(200).json({message: `Login was correct, welcome ${username}`});
+                return res.status(200).json({token: result[0].UserToken});
             }
     } catch(err){
         console.error("Error during login:", err); 

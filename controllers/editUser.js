@@ -1,12 +1,12 @@
 import db from "../sequelize.js";
 
 export const editUser = async (req, res, next) => {
-    const { Token, NewUsername, NewPassword } = req.body;
+    const { token, newPassword } = req.body;
 
     try {
-        const result = await db.query(`EXEC EditUser @Token = :Token, @NewUsername = :NewUsername, @NewPassword = :NewPassword`,
+        const result = await db.query(`EXEC EditUser @Token = :token, @NewPassword = :newPassword`,
             {
-                replacements: {Token, NewUsername, NewPassword }, 
+                replacements: {token, newPassword }, 
                 type: db.QueryTypes.SELECT
             }
         );

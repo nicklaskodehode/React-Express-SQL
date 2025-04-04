@@ -15,7 +15,7 @@ export const getUser = async (req, res, next) => {
           );
           if (result.length > 0) {
             const username = result[0].username;
-            return res.status(200).json({message: `Welcome ${username}`});
+            return res.status(200).json({message: `Welcome ${username}`, username: result[0].username});
            
         }
         else{

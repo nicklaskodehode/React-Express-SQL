@@ -14,7 +14,7 @@ export const createNewUser = async (req, res, next) => {
                 type: db.QueryTypes.SELECT
             });
         if (result.returnValue === -1) {
-            return res.status(400).json({ error: "Username already exists" });
+            return res.status(400).json({ error: 'Username is already taken'});
         }
         return res.status(200).json({message: "Your account has been created"});
     } catch (error) {
