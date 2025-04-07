@@ -10,8 +10,8 @@ export const editUser = async (req, res, next) => {
                 type: db.QueryTypes.SELECT
             }
         );
-        if (result.returnValue === -1) {
-            return res.status(401).json({ error: "Invalid or expired token" });
+        if (result[0].statusCode === -2) {
+            return res.status(401).json({error: "Invalid or expired token"});
         }
         res.json({ message: "User profile has been updated" });
     } catch (error) {
