@@ -10,8 +10,9 @@ export const login = async (req, res, next) => {
             `
             declare @ReturnValue int; 
             declare @Token nvarchar(4000); 
-            EXEC @ReturnValue = LoginUser @username = :username, @password = :password, @userToken = @Token OUTPUT; 
-            Select @ReturnValue as ReturnValue, @Token as UserToken;
+            declare @flag BIT;
+            EXEC @ReturnValue = LoginUser @username = :username, @password = :password, @flag = @flag OUTPUT, @userToken = @Token OUTPUT; 
+            Select @ReturnValue as ReturnValue, @Token as UserToken, @flag as roleFlag;
             `,
         {
             replacements: { username, password }, 
@@ -24,7 +25,7 @@ export const login = async (req, res, next) => {
                 return res.status(400).json({ error: 'Something went wrong'});
             }
             else{
-                return res.status(200).json({token: result[0].UserToken});
+                return res.status(200).json({token: result[0].UserToken, roleFlag: result[0].roleFlag});
             }
     } catch(err){
         return res.status(500).json({ error: "An Error occured: "+ err });
